@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CloudflareRecordController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,7 +23,6 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [CloudflareRecordController::class, 'index'])->name('dashboard');
+    Route::resource('cloudflare-records', CloudflareRecordController::class)->except(['index']);
 });
