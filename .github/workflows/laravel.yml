@@ -22,10 +22,12 @@ jobs:
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
     - name: Generate key
       run: php artisan key:generate
-    - name: build assets
-      run: npm run build
     - name: Directory Permissions
       run: chmod -R 777 storage bootstrap/cache
+    - name: build assets
+      run: |
+        npm install vite
+        npm run build
     - name: Create Database
       run: |
         mkdir -p database
