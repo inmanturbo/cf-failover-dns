@@ -9,7 +9,6 @@ use Livewire\Component;
 
 class CreateCloudflareRecordForm extends Component
 {
-
     public $state = [
         'hostname' => '@',
         'domain' => null,

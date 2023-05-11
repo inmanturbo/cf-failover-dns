@@ -24,7 +24,10 @@ class CloudflareRecordFactory extends Factory
             'cached_ip' => $this->faker->ipv4,
             'virtual_ip' => $this->faker->ipv4,
             'proxy' => $this->faker->boolean,
-            'data' => $this->faker->text,
+            'data' => [
+                'foo' => 'bar',
+            ],
+            'team_id' => 1,
         ];
     }
 }

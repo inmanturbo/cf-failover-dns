@@ -1,5 +1,5 @@
 <div>
-    <x-form-section submit="update">
+    <x-form-section submit="storeRecord">
         <x-slot name="title">
             {{ __('Edit Record') }}
         </x-slot>

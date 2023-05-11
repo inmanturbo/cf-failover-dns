@@ -21,19 +21,19 @@ class CloudflareRecord extends Model
         'fqdn',
     ];
 
-    public function fqdn() : Attribute
+    public function fqdn(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => $this->hostname === '@' ? $this->domain : $this->hostname . '.' . $this->domain,
+            get: fn ($value) => $this->hostname === '@' ? $this->domain : $this->hostname.'.'.$this->domain,
         );
     }
 
-    public function owner() : \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function owner(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    public function team() : \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function team(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Team::class, 'team_id', 'id');
     }

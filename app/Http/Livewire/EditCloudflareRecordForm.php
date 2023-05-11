@@ -9,7 +9,6 @@ use Livewire\Component;
 
 class EditCloudflareRecordForm extends Component
 {
-
     public $state = [];
 
     public $proxyChanged = false;
@@ -17,9 +16,6 @@ class EditCloudflareRecordForm extends Component
     public function mount(CloudflareRecord $cloudflareRecord)
     {
         $this->state = $cloudflareRecord->toArray();
-        unset($this->state['created_at']);
-        unset($this->state['updated_at']);
-        unset($this->state['fqdn']);
         unset($this->state['cached_ip']);
     }
 
@@ -28,13 +24,13 @@ class EditCloudflareRecordForm extends Component
         $this->proxyChanged = true;
     }
 
-    public function update()
+    public function storeRecord()
     {
         $this->resetErrorBag();
 
         Validator::make($this->state, [
             'hostname' => ['required', 'string', 'max:255'],
-            'domain' => ['required','string', 'max:255'],
+            'domain' => ['required', 'string', 'max:255'],
             'interface_ip' => ['required', 'ipv4', 'max:255'],
             'virtual_ip' => ['nullable', 'ipv4', 'max:255'],
             'proxy' => ['nullable', 'boolean'],
@@ -47,13 +43,15 @@ class EditCloudflareRecordForm extends Component
         $this->state['hostname'] = $this->state['hostname'] ?? '@';
         // $this->state['user_id'] = auth()->id();
         $this->state['team_id'] = auth()->user()->currentTeam->id;
-        if($this->proxyChanged){
+        if ($this->proxyChanged) {
             $this->state['cached_ip'] = null;
         }
 
-        $cloudflareRecord = CloudflareRecord::firstOrFail($this->state['id']);
+        unset($this->state['created_at']);
+        unset($this->state['updated_at']);
+        unset($this->state['fqdn']);
 
-        // dd($this->state);
+        $cloudflareRecord = CloudflareRecord::firstOrFail($this->state['id']);
 
         $cloudflareRecord->update($this->state);
 

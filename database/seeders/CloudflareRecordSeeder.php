@@ -3,8 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\CloudflareRecord;
-use BaconQrCode\Renderer\Path\Close;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class CloudflareRecordSeeder extends Seeder

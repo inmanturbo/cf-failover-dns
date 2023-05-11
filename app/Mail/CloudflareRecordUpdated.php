@@ -4,13 +4,11 @@ namespace App\Mail;
 
 use App\Models\CloudflareRecord;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
-use Monolog\Formatter\GoogleCloudLoggingFormatter;
 
 class CloudflareRecordUpdated extends Mailable
 {
@@ -45,7 +43,7 @@ class CloudflareRecordUpdated extends Mailable
      */
     public function build()
     {
-        return $this->markdown('mail.cloudflare-record-updated',[
+        return $this->markdown('mail.cloudflare-record-updated', [
             'record' => $this->record,
         ]);
     }
@@ -59,5 +57,4 @@ class CloudflareRecordUpdated extends Mailable
     {
         return [];
     }
-
 }

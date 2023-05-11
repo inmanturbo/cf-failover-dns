@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('cached_ip')->nullable();
             $table->string('virtual_ip');
             $table->boolean('proxy')->default('false');
-            $table->text('data');
+            $table->text('data')->nullable();
             $table->timestamps();
         });
     }
