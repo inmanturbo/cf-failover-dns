@@ -20,6 +20,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Feature::define('send-emails', config('features.send-emails'));
+        //
     }
 }
