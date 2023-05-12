@@ -16,7 +16,7 @@ beforeEach(function () {
         $this->actingAs($user = User::factory()->create());
     }
 
-    $this->user = $user;
+    $this->user = $user->fresh();
 
     $this->cloudflareInput = Arr::except(CloudflareRecord::factory()->make(['hostname' => 'test-cf'])->toArray(), [
         'data',
@@ -27,14 +27,12 @@ beforeEach(function () {
 });
 
 it('has create cloudflare record page', function () {
-
     $response = $this->get(route('cloudflare-records.create'));
 
     $response->assertStatus(200);
 });
 
 it('can create cloudflare record', function () {
-
     Artisan::shouldReceive('call')
         ->once()
         ->with('update-dns');
@@ -48,7 +46,6 @@ it('can create cloudflare record', function () {
 });
 
 it('has update cloudflare record page', function () {
-
     $cloudflareRecord = CloudflareRecord::factory()->create([
         'user_id' => $this->user->id,
         'team_id' => $this->user->currentTeam->id,
@@ -60,7 +57,6 @@ it('has update cloudflare record page', function () {
 });
 
 it('can update cloudflare record', function () {
-
     Artisan::shouldReceive('call')
         ->once()
         ->with('update-dns');
@@ -76,4 +72,14 @@ it('can update cloudflare record', function () {
 
     expect($this->user->fresh()->cloudflareRecords)->toHaveCount(1);
     expect($this->user->fresh()->cloudflareRecords()->latest('id')->first()->hostname)->toEqual('test-cf');
+});
+
+it('can delete cloudflare record', function () {
+    $response = $this->delete(route('cloudflare-records.destroy', CloudflareRecord::factory()->create([
+        'user_id' => $this->user->id,
+        'team_id' => $this->user->currentTeam->id,
+    ])));
+
+    $response->assertRedirect(route('dashboard'));
+    expect($this->user->fresh()->cloudflareRecords)->toHaveCount(0);
 });
