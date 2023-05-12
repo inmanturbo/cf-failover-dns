@@ -12,7 +12,7 @@ class CloudflareRecordPolicy
      */
     public function viewAny(User $user): bool
     {
-      return $user->hasTeamPermission($user->currentTeam, 'view');
+        return $user->hasTeamPermission($user->currentTeam, 'view');
     }
 
     /**
